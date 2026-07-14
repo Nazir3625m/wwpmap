@@ -1,54 +1,53 @@
 // Create map
-const map = L.map("map").setView([12.8797,121.7740],6);
+const map = L.map('map').setView([15.0, 120.8], 10);
 
-// OpenStreetMap layer
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
-    attribution:"© OpenStreetMap contributors",
-    maxZoom:19
+// Base map
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Default color
-let selectedColor="#ff0000";
+// Selected color
+let selectedColor = "#ff0000";
 
-// Demo polygon
-const demo=L.polygon([
-    [14.85,120.82],
-    [14.92,120.98],
-    [14.73,121.03],
-    [14.65,120.87]
-],{
-    color:"#ffffff",
-    weight:2,
-    fillColor:"#808080",
-    fillOpacity:0.7
-}).addTo(map);
-
-// Click polygon
-demo.on("click",function(){
-
-    demo.setStyle({
-        fillColor:selectedColor
-    });
-
+// Color picker
+document.getElementById("colorPicker").addEventListener("input", function () {
+    selectedColor = this.value;
 });
 
-// Color Picker
-document.getElementById("colorPicker").addEventListener("input",function(){
+// Load Bulacan GeoJSON
+fetch("maps/bulacan.geojson")
+.then(response => response.json())
+.then(data => {
 
-    selectedColor=this.value;
+    const layer = L.geoJSON(data, {
+        style: {
+            color: "#ffffff",
+            weight: 1,
+            fillColor: "#808080",
+            fillOpacity: 0.8
+        },
 
+        onEachFeature: function(feature, layer){
+
+            layer.on("click", function(){
+
+                layer.setStyle({
+                    fillColor: selectedColor
+                });
+
+                if(feature.properties){
+                    alert(feature.properties.NAME_2 || feature.properties.name || "Municipality");
+                }
+
+            });
+
+        }
+
+    }).addTo(map);
+
+    map.fitBounds(layer.getBounds());
+
+})
+.catch(error => {
+    console.error("Error loading GeoJSON:", error);
 });
-
-// Apply Button
-document.getElementById("applyBtn").onclick=function(){
-
-    alert("Select a municipality on the next version.");
-
-};
-
-// Export Button
-document.getElementById("downloadBtn").onclick=function(){
-
-    alert("PNG Export will be available in Version 2.");
-
-};
