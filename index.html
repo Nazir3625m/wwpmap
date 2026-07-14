@@ -2,23 +2,63 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Weather Watch PH</title>
+<title>Weather Watch PH Mapping System</title>
 
-<link rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
-<header>
-<h1>🌦 WEATHER WATCH PH</h1>
-<p>Interactive Advisory Mapping System</p>
-</header>
+<div class="sidebar">
+
+<h2>🌦 Weather Watch PH</h2>
+
+<label>Advisory</label>
+
+<select>
+<option>Class Suspension</option>
+<option>Rainfall Warning</option>
+<option>Flood Advisory</option>
+<option>Tropical Cyclone</option>
+<option>Storm Surge</option>
+<option>Heat Index</option>
+<option>Earthquake</option>
+<option>Volcanic Alert</option>
+</select>
+
+<label>Region</label>
+<select id="region">
+<option>Select Region</option>
+</select>
+
+<label>Province</label>
+<select id="province">
+<option>Select Province</option>
+</select>
+
+<label>Municipality</label>
+<select id="municipality">
+<option>Select Municipality</option>
+</select>
+
+<label>Status</label>
+
+<select>
+<option>🔴 All Levels</option>
+<option>🟠 Senior High</option>
+<option>🟡 Elementary</option>
+<option>⚪ No Advisory</option>
+</select>
+
+<button>Apply</button>
+
+<button>Generate PNG</button>
+
+</div>
 
 <div id="map"></div>
 
