@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Watch PH Mapping System</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<header>
+<h1>🌦 WEATHER WATCH PH</h1>
+<p>Interactive Advisory Mapping System</p>
+</header>
+
+<div class="container">
+
+<div class="panel">
+
+<label>Advisory</label>
+
+<select id="advisory">
+<option>Class Suspension</option>
+<option>Rainfall Warning</option>
+<option>Flood Advisory</option>
+<option>Tropical Cyclone</option>
+<option>Storm Surge</option>
+<option>Heat Index</option>
+<option>Earthquake</option>
+<option>Volcanic Alert</option>
+</select>
+
+<label>Region</label>
+
+<select id="region">
+<option>Select Region</option>
+</select>
+
+<label>Province</label>
+
+<select id="province">
+<option>Select Province</option>
+</select>
+
+<label>Municipality</label>
+
+<select id="municipality">
+<option>Select Municipality</option>
+</select>
+
+<label>Status</label>
+
+<select id="status">
+
+<option value="red">All Levels</option>
+<option value="orange">Senior High</option>
+<option value="yellow">Elementary</option>
+<option value="gray">No Advisory</option>
+
+</select>
+
+<button id="apply">
+Apply
+</button>
+
+<button id="download">
+Generate PNG
+</button>
+
+</div>
+
+<div class="map">
+
+<h2>Philippines Map</h2>
+
+<div id="svgMap">
+
+COMING SOON
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
