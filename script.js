@@ -1,116 +1,102 @@
+// ========================
 // CREATE MAP
+// ========================
 const map = L.map('map').setView([15.0, 120.8], 10);
 
-
+// ========================
 // BASE MAP
+// ========================
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-
+// ========================
 // SELECTED COLOR
+// ========================
 let selectedColor = "#ff0000";
 
-
-// COLOR PICKER
 document.getElementById("colorPicker").addEventListener("input", function () {
     selectedColor = this.value;
 });
 
+let geojsonLayer;
 
+// ========================
 // LOAD BULACAN GEOJSON
-fetch("maps/municities-province-17-bulacan.0.1.json")
+// ========================
+fetch("./maps/municities-province-17-bulacan.0.1.json")
+.then(response => {
 
-.then(response => response.json())
+    if (!response.ok) {
+        throw new Error("Cannot load GeoJSON.");
+    }
 
+    return response.json();
+
+})
 .then(data => {
 
+    geojsonLayer = L.geoJSON(data, {
 
-    const layer = L.geoJSON(data, {
-
-
-        style: {
-
-            color: "#ffffff",
-            weight: 1,
-            fillColor: "#808080",
-            fillOpacity: 0.8
-
+        style: function () {
+            return {
+                color: "#ffffff",
+                weight: 1,
+                fillColor: "#808080",
+                fillOpacity: 0.8
+            };
         },
 
+        onEachFeature: function (feature, layer) {
 
-        onEachFeature: function(feature, layer){
+            const municipality =
+                feature.properties.ADM3_EN ||
+                feature.properties.NAME_2 ||
+                feature.properties.NAME ||
+                feature.properties.name ||
+                "Municipality";
 
-
-            let municipality =
-            feature.properties.NAME_2 ||
-            feature.properties.name ||
-            "Municipality";
-
-
-            // HOVER EFFECT
-            layer.on("mouseover", function(){
-
+            // Hover
+            layer.on("mouseover", function () {
                 layer.setStyle({
-
                     weight: 3,
                     color: "#000000"
-
                 });
-
             });
 
+            layer.on("mouseout", function () {
+                geojsonLayer.resetStyle(layer);
+            });
 
-
-            layer.on("mouseout", function(){
+            // Click
+            layer.on("click", function () {
 
                 layer.setStyle({
-
-                    weight: 1,
-                    color: "#ffffff"
-
+                    fillColor: selectedColor,
+                    fillOpacity: 0.9
                 });
 
-            });
-
-
-
-            // CLICK TO CHANGE COLOR
-            layer.on("click", function(){
-
-
-                layer.setStyle({
-
-                    fillColor: selectedColor
-
-                });
-
-
-
-                layer.bindPopup(
-                    "<b>" + municipality + "</b>"
-                ).openPopup();
-
+                layer.bindPopup("<b>" + municipality + "</b>").openPopup();
 
             });
-
 
         }
 
-
     }).addTo(map);
 
-
-
-    // AUTO ZOOM TO BULACAN
-    map.fitBounds(layer.getBounds());
-
+    map.fitBounds(geojsonLayer.getBounds());
 
 })
-
-
 .catch(error => {
 
-    console.error("Error loading GeoJSON:", error);
+    console.error(error);
+    alert("Failed to load GeoJSON file.");
 
+});
+
+// ========================
+// DOWNLOAD PNG
+// ========================
+document.getElementById("downloadBtn").addEventListener("click", function () {
+    window.print();
 });
