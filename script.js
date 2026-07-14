@@ -1,117 +1,116 @@
-// Create map
+// CREATE MAP
 const map = L.map('map').setView([15.0, 120.8], 10);
 
-// Base map
+
+// BASE MAP
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+    attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
-// Selected color
+
+// SELECTED COLOR
 let selectedColor = "#ff0000";
 
-// Color picker
-const colorPicker = document.getElementById("colorPicker");
 
-if (colorPicker) {
-    colorPicker.addEventListener("input", function () {
-        selectedColor = this.value;
-    });
-}
+// COLOR PICKER
+document.getElementById("colorPicker").addEventListener("input", function () {
+    selectedColor = this.value;
+});
 
-// Store GeoJSON layer
-let bulacanLayer;
 
-// Load Bulacan GeoJSON
-fetch("maps/bulacan.geojson")
+// LOAD BULACAN GEOJSON
+fetch("maps/municities-province-17-bulacan.0.1.json")
+
 .then(response => response.json())
+
 .then(data => {
 
-    bulacanLayer = L.geoJSON(data, {
 
-        style: function () {
-            return {
-                color: "#ffffff",
-                weight: 1,
-                fillColor: "#808080",
-                fillOpacity: 0.8
-            };
+    const layer = L.geoJSON(data, {
+
+
+        style: {
+
+            color: "#ffffff",
+            weight: 1,
+            fillColor: "#808080",
+            fillOpacity: 0.8
+
         },
+
 
         onEachFeature: function(feature, layer){
 
-            // Hover effect
+
+            let municipality =
+            feature.properties.NAME_2 ||
+            feature.properties.name ||
+            "Municipality";
+
+
+            // HOVER EFFECT
             layer.on("mouseover", function(){
+
                 layer.setStyle({
+
                     weight: 3,
                     color: "#000000"
+
                 });
+
             });
+
+
 
             layer.on("mouseout", function(){
+
                 layer.setStyle({
+
                     weight: 1,
                     color: "#ffffff"
+
                 });
+
             });
 
 
-            // Click municipality
+
+            // CLICK TO CHANGE COLOR
             layer.on("click", function(){
 
+
                 layer.setStyle({
-                    fillColor: selectedColor,
-                    fillOpacity: 0.9
+
+                    fillColor: selectedColor
+
                 });
 
 
-                let name = "Municipality";
 
-                if(feature.properties){
-                    name = feature.properties.NAME_2 || 
-                           feature.properties.name || 
-                           "Municipality";
-                }
+                layer.bindPopup(
+                    "<b>" + municipality + "</b>"
+                ).openPopup();
 
-
-                // Display selected area
-                const display = document.getElementById("selectedArea");
-
-                if(display){
-                    display.innerHTML = 
-                    "Selected: <b>" + name + "</b>";
-                } else {
-                    alert(name);
-                }
 
             });
 
+
         }
+
 
     }).addTo(map);
 
 
-    map.fitBounds(bulacanLayer.getBounds());
+
+    // AUTO ZOOM TO BULACAN
+    map.fitBounds(layer.getBounds());
+
 
 })
+
+
 .catch(error => {
+
     console.error("Error loading GeoJSON:", error);
+
 });
-
-
-// Reset all colors button (optional)
-const resetBtn = document.getElementById("resetMap");
-
-if(resetBtn){
-    resetBtn.addEventListener("click", function(){
-
-        bulacanLayer.eachLayer(function(layer){
-
-            layer.setStyle({
-                fillColor:"#808080",
-                fillOpacity:0.8
-            });
-
-        });
-
-    });
-}
