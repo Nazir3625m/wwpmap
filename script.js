@@ -87,6 +87,7 @@ fetch("./maps/municities-province-17-bulacan.0.1.json")
     map.fitBounds(geojsonLayer.getBounds());
 
 })
+    loadMunicipalities(geojsonLayer);
 .catch(error => {
 
     console.error(error);
