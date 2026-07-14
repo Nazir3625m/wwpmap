@@ -27,3 +27,6 @@ demo.on("click",function(){
         fillColor:selectedColor
     });
 });
+document.getElementById("colorPicker").addEventListener("input",function(){
+    selectedColor=this.value;
+});
