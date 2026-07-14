@@ -100,3 +100,27 @@ fetch("./maps/municities-province-17-bulacan.0.1.json")
 document.getElementById("downloadBtn").addEventListener("click", function () {
     window.print();
 });
+const municipalitySelect = document.getElementById("municipality");
+
+function loadMunicipalities(layer){
+
+    municipalitySelect.innerHTML =
+    '<option value="">Select Municipality</option>';
+
+    layer.eachLayer(function(l){
+
+        const name =
+            l.feature.properties.ADM3_EN ||
+            l.feature.properties.NAME_2 ||
+            l.feature.properties.NAME ||
+            l.feature.properties.name;
+
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+
+        municipalitySelect.appendChild(option);
+
+    });
+
+}
