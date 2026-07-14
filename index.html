@@ -7,10 +7,9 @@
 <title>Weather Watch PH Mapping System</title>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-
 <link rel="stylesheet" href="style.css">
-</head>
 
+</head>
 <body>
 
 <div class="sidebar">
@@ -18,7 +17,6 @@
 <h2>🌦 Weather Watch PH</h2>
 
 <label>Advisory</label>
-
 <select>
 <option>Class Suspension</option>
 <option>Rainfall Warning</option>
@@ -46,27 +44,24 @@
 </select>
 
 <label>Status</label>
-
 <select>
 <option>🔴 All Levels</option>
 <option>🟠 Senior High</option>
 <option>🟡 Elementary</option>
 <option>⚪ No Advisory</option>
 </select>
-  <label>Color</label>
 
+<label>Color</label>
 <input type="color" id="colorPicker" value="#ff0000">
 
-<button>Apply</button>
-
-<button>Generate PNG</button>
+<button id="applyBtn">Apply</button>
+<button id="downloadBtn">Generate PNG</button>
 
 </div>
 
 <div id="map"></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script src="script.js"></script>
 
 </body>
