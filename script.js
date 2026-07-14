@@ -1,11 +1,5 @@
-document.getElementById("apply").onclick=()=>{
+const map = L.map('map').setView([12.8797, 121.7740], 6);
 
-alert("Status Applied");
-
-}
-
-document.getElementById("download").onclick=()=>{
-
-alert("PNG Export Coming Soon");
-
-}
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
