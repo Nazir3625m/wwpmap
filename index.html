@@ -10,14 +10,16 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
 <div class="sidebar">
 
 <h2>🌦 Weather Watch PH</h2>
 
+
 <label>Advisory</label>
-<select>
+<select id="advisory">
 <option>Class Suspension</option>
 <option>Rainfall Warning</option>
 <option>Flood Advisory</option>
@@ -28,41 +30,52 @@
 <option>Volcanic Alert</option>
 </select>
 
+
 <label>Region</label>
 <select id="region">
-<option>Select Region</option>
+<option value="">Select Region</option>
 </select>
+
 
 <label>Province</label>
 <select id="province">
-<option>Select Province</option>
+<option value="">Select Province</option>
 </select>
+
 
 <label>Municipality</label>
 <select id="municipality">
-<option>Select Municipality</option>
+<option value="">Select Municipality</option>
 </select>
 
+
 <label>Status</label>
-<select>
+<select id="status">
 <option>🔴 All Levels</option>
 <option>🟠 Senior High</option>
 <option>🟡 Elementary</option>
 <option>⚪ No Advisory</option>
 </select>
 
+
 <label>Color</label>
 <input type="color" id="colorPicker" value="#ff0000">
+
 
 <button id="applyBtn">Apply</button>
 <button id="downloadBtn">Generate PNG</button>
 
+
 </div>
+
 
 <div id="map"></div>
 
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script src="script.js"></script>
+
 
 </body>
 </html>
